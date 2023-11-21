@@ -1,0 +1,15 @@
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    mat-toolbar{
+        justify-content: space-between;
+        .header_left{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+}

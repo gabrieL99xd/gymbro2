@@ -1,0 +1,26 @@
+<main>
+    <form [formGroup]="loginForm">
+        <mat-form-field >
+            <mat-label>User</mat-label>
+            <input type="text" matInput formControlName="login" 
+                   placeholder="Usuário">
+            <mat-hint>Digite seu usuário</mat-hint>
+            <mat-error *ngIf="loginForm.controls['login'].hasError('required')">
+              Usuário é <strong>obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field >
+            <mat-label>Senha</mat-label>
+            <input type="text" matInput formControlName="password"
+                   placeholder="Senha">
+            <mat-hint>Digite sua senha</mat-hint>
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+              Senha é <strong>obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+          <div class="register">
+            <p>Ainda não possui uma conta ? <a mat-button color="primary" routerLink="/Register" >cadastre-se aqui!</a></p>
+          </div>
+          <button mat-raised-button color="accent" [disabled]="!loginForm.valid" (click)="login()">ENTRAR</button>
+    </form>
+</main>

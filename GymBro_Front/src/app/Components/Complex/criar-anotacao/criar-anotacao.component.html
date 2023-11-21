@@ -1,0 +1,22 @@
+<main>
+    <form [formGroup]="anotacaoForm">
+        <mat-form-field>
+            <mat-label>Título</mat-label>
+            <input type="text" matInput placeholder="Título " formControlName="Titulo">
+            <mat-hint>Digite o título</mat-hint>
+            <mat-error *ngIf="anotacaoForm.controls['Titulo'].hasError('required')">
+                Título é <strong>obrigatório</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Descrição</mat-label>
+            <textarea type="text" matInput placeholder="Descrição " formControlName="Descricao"></textarea>
+            <mat-hint>Digite a descrição</mat-hint>
+            <mat-error *ngIf="anotacaoForm.controls['Descricao'].hasError('required')">
+                Descrição é <strong>obrigatório</strong>
+            </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="register()" [disabled]="anotacaoForm.invalid">REGISTRAR</button>
+    </form>
+</main>
+

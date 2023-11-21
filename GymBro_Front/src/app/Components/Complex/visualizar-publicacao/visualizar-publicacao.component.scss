@@ -1,0 +1,26 @@
+main{
+    padding: 64px 0 0 0;
+    height: 100%;
+    .publicacao{
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+.autor{
+    font-size: 12px;
+}
+.resposta_container{
+    width: 85%;
+    margin: 0 auto;
+}
+.comentario{
+    width: 80%;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    mat-form-field{
+        width: 100%;
+    }
+}

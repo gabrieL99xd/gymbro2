@@ -1,0 +1,24 @@
+<main>
+    <div class="botao_criar">
+        <button mat-stroked-button color="warn"><a [routerLink]="['/CriarPublicacao']">CRIAR PUBLICAÇÃO</a></button>
+    </div>
+    <div class="publicacoes">
+        <ng-container *ngFor="let publicacao of publicacoes">
+            <div class="publicacao" (click)="visualizarPublicacao(publicacao.id)">
+                <h2>{{ publicacao.titulo }}</h2>
+                <p class="descricao">{{ publicacao.descricao }}</p>
+                <p class="autor">Autor : {{ publicacao.autor.apelido }}</p>
+            </div>
+            <mat-divider></mat-divider>
+        </ng-container>
+    </div>
+    <mat-paginator 
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSize]="pageSize"
+        [showFirstLastButtons]="showFirstLastButtons"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        aria-label="Select page">
+    </mat-paginator>
+</main>

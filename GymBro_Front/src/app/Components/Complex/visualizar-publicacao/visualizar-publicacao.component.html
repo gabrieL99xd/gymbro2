@@ -1,0 +1,25 @@
+<main *ngIf="publicacao !== undefined && publicacao.respostas !== undefined">
+    <div class="publicacao" >
+        <h2>{{ publicacao.titulo }}</h2>
+        <p>{{ publicacao.descricao }}</p>
+        <p class="autor"> Autor: {{ publicacao.autor.apelido }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="respostas" >
+        <div class="resposta" *ngFor="let resposta of publicacao.respostas">
+            <div class="resposta_container">
+                <p >{{ resposta.descricao }}</p>
+                <p class="autor">Autor : {{ resposta.autor.apelido }}</p>
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+    </div>
+    <div class="comentario">
+        <mat-form-field>
+            <mat-label>Faça um comentário</mat-label>
+            <input type="text" matInput  [(ngModel)]="respostaConteudo"
+                   placeholder="Publique um comentário">
+        </mat-form-field>
+        <button mat-button color="warn" (click)="registrarResposta()" [disabled]="respostaConteudo.length === 0">ENVIAR</button>
+    </div>
+</main>

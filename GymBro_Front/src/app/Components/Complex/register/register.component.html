@@ -1,0 +1,50 @@
+<main>
+    <form [formGroup]="registerForm">
+        <div class="usr_pass">
+            <mat-form-field>
+                <mat-label>Usuário</mat-label>
+                <input type="text" matInput placeholder="Usuário " formControlName="login">
+                <mat-hint>Digite seu usuário</mat-hint>
+                <mat-error *ngIf="registerForm.controls['login'].hasError('required')">
+                    Usuário é <strong>obrigatório</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field >
+                <mat-label>Apelido</mat-label>
+                <input type="text" matInput placeholder="Apelido" formControlName="apelido">
+                <mat-hint>Digite seu apelido</mat-hint>
+                <mat-error *ngIf="registerForm.controls['apelido'].hasError('required')">
+                    Apelido é <strong>obrigatório</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input type="password" matInput placeholder="Senha" formControlName= "password">
+            <mat-hint>Digite sua senha</mat-hint>
+            <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
+                Senha é <strong>obrigatório</strong>
+            </mat-error>
+        </mat-form-field>
+        <div class="cep">
+            <mat-form-field  class="first_field">
+                <mat-label>CEP</mat-label>
+                <input type="number" matInput placeholder="CEP" formControlName="CEP" (input)="onCepChange($event)" >
+                <mat-hint>Digite o CEP</mat-hint>
+            </mat-form-field>
+            <mat-form-field class="second_field">
+                <mat-label>Bairro</mat-label>
+                <input type="text" matInput placeholder="Bairro" formControlName="bairro">
+            </mat-form-field>
+        </div>
+        <mat-form-field >
+            <mat-label>Logradouro</mat-label>
+            <input type="text" matInput placeholder="Logradouro" formControlName="logradouro">
+        </mat-form-field>
+        <mat-form-field >
+            <mat-label>Localidade</mat-label>
+            <input type="text" matInput placeholder="Localidade" formControlName="localidade">
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="register()" [disabled]="registerForm.invalid">REGISTRAR</button>
+    </form>
+</main>

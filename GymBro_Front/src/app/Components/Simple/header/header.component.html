@@ -1,0 +1,34 @@
+<ng-template [ngIf]="!tokenService.hasToken()">
+  <header>
+    <mat-toolbar color="primary">
+      <div class="header_left">
+          <mat-icon>fitness_center</mat-icon>
+          <span>GymBro</span>
+      </div>
+      <div class="header_right">
+            <a mat-icon-button *ngIf="router.url !== '/Login' && router.url !== '/Register'" aria-label="Botão de Login" #tooltip="matTooltip" matTooltip="Login" matTooltipPosition="below" [routerLink]="['/Login']">
+              <mat-icon>login</mat-icon>
+            </a>
+            <a mat-icon-button *ngIf="router.url !== '/'" aria-label="Botão de voltar" #tooltip="matTooltip" matTooltip="Voltar" matTooltipPosition="below" [routerLink]="['/']">
+              <mat-icon>arrow_back_ios</mat-icon>
+            </a>
+      </div>
+    </mat-toolbar>
+  </header>
+</ng-template>
+
+<ng-template [ngIf]="tokenService.hasToken()">
+  <header>
+    <mat-toolbar color="primary">
+      <div class="header_left">
+          <mat-icon>fitness_center</mat-icon>
+          <span>GymBro</span>
+      </div>
+      <div class="header_right">
+        <button mat-icon-button aria-label="Botão do menu" (click)="toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+  </header>
+</ng-template>

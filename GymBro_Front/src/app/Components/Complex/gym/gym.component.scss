@@ -1,0 +1,36 @@
+main{
+    padding: 64px 0 0 0;
+    min-height: 100%;
+    .botao_criar{
+        margin: 20px;
+        display: flex;
+        justify-content: flex-end;
+        button{
+            padding: 20px;
+            font-weight: bold;
+        }
+    }
+    .publicacoes{
+        width: 90%;
+        margin: 0 auto;
+        .publicacao{
+            padding: 10px;
+            &:hover{
+                cursor: pointer;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+            h2{
+                text-transform: uppercase;
+                letter-spacing: 6px;
+                font-size: 32px;
+            }
+            .descricao{
+                font-size: 24px;
+                overflow-wrap: break-word;
+            }
+            .autor{
+                font-size: 12px;
+            }
+        }
+    }
+}
