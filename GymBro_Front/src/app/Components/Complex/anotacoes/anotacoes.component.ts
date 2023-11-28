@@ -11,6 +11,7 @@ export class AnotacoesComponent {
   anotacoes : any;
 
   constructor(private anotacaoService : AnotacaoService){
+    //Apenas busca todas as anotações 
     this.anotacaoService.getAllAnotacoes().subscribe({
       next:(value)=>{
         this.anotacoes = value;

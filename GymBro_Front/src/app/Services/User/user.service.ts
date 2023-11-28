@@ -17,10 +17,13 @@ export class UserService {
   constructor(public http : HttpClient , public tokenService : TokenService , private router: Router) { }
 
   async getUsuarioLogado() : Promise<GymBro_Usuario | null> {
+    //pega do local token armazenado
     const token = this.tokenService.getToken() ?? '';
     const decoded = jwtDecode(token) as any;
     const id = decoded.Id;
+    //recupera o id do usuario
     let usuario : GymBro_Usuario | null = null;
+    //recupera usuario baseado no id.
     try {
       const response = await this.http.get(this.url+ '/' + id).toPromise();
       return response as GymBro_Usuario;

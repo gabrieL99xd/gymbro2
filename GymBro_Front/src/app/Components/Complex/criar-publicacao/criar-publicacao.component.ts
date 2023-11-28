@@ -16,6 +16,7 @@ export class CriarPublicacaoComponent {
   publicacaoForm: FormGroup;
 
   constructor(private publicacaoService : PublicacaoService , private userService : UserService , private tokenService : TokenService) {
+    //Validadores para o form.
     this.publicacaoForm = new FormGroup({
       Titulo: new FormControl('', [Validators.required ]),
       Descricao: new FormControl('', [Validators.required ]),
@@ -23,8 +24,11 @@ export class CriarPublicacaoComponent {
   }
 
   async register() {
+    //Pega o usuario logado  usando o service.
     const usuario = await this.userService.getUsuarioLogado();
+    // caso não seja nulo
     if(usuario !== null){
+      //Busca informações do form e preenche o objeto.
       const publicacao : Publicacao = {
         Id : 0,
         Titulo : this.publicacaoForm.get('Titulo')!.value,
@@ -32,6 +36,7 @@ export class CriarPublicacaoComponent {
         Autor : usuario,
         Respostas : [],
       }
+      //Chama o serviço para registrar publicaçõ
       this.publicacaoService.registrarPublicacao(publicacao);
     }
   }

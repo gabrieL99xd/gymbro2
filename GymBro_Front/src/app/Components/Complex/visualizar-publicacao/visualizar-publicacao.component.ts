@@ -20,12 +20,13 @@ export class VisualizarPublicacaoComponent {
     private publicacaoService : PublicacaoService , 
     private respostaService : RespostasService , 
     private userService: UserService) {
-
+      //recupera da url o parametro id
     const IdString = this.route.snapshot.paramMap.get('id');
     if(IdString !== null){
+      //converte para int
       this.userId = Number(IdString);
     }
-
+    // pega a publicação 
     this.publicacaoService.getPublicacao(this.userId).subscribe({
       next:(value)=>{
         this.publicacao = value;
@@ -34,15 +35,17 @@ export class VisualizarPublicacaoComponent {
    }
 
    async registrarResposta(){
-
+    //recupera usuario logado
     const usuario = await this.userService.getUsuarioLogado();
 
     if(usuario !== null){
+      //preenche objeto baseado no usuario logado e na variavel do componetne ligada ao form.
       const usuarioteste = usuario as any;
       let resposta = {
         idDoAutor : usuarioteste.id,
         Descricao : this.respostaConteudo,
       }
+      //salva resposta e carrega a nova publicação com todas respostas
       this.respostaService.saveResposta(this.publicacao.id, resposta).subscribe({
         next: (value) => {
           this.publicacaoService.getPublicacao(this.userId).subscribe({
@@ -51,6 +54,7 @@ export class VisualizarPublicacaoComponent {
               console.log(this.publicacao);
             }
           });
+          //limpa o form de resposta.
           this.respostaConteudo = '';
         },
         error:(err)=> {

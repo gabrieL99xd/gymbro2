@@ -28,10 +28,12 @@ export class RegisterComponent {
 
   onCepChange(event : any) {
     let cep = event.target.value;
+    // quando o cep for igual a 8 caracteres.
     if (cep && cep.length >= 8) {
       event.target.value = cep.slice(0, 8);
+      // garante que o input e o cep terão somente 8 caracteres
       cep = cep.slice(0,8);
-
+      //Consulta cep e preenche no formulario.
       this.cepService.consultarCep(cep).subscribe((data: any) => {
         this.registerForm.get('bairro')?.setValue(data.bairro);
         this.registerForm.get('logradouro')?.setValue(data.logradouro);
@@ -42,6 +44,7 @@ export class RegisterComponent {
   }
 
   register() : void {
+    //preenche objeto , pegando info do form preenchido.
     const user : GymBro_Usuario = {
       Id:0,
       Usuario: this.registerForm.get('login')!.value,
@@ -52,7 +55,7 @@ export class RegisterComponent {
       Logradouro : this.registerForm.get('logradouro')?.value ?? '',
       Localidade : this.registerForm.get('localidade')?.value ?? ''
     };
-    console.log(user);
+    //joga para o serviço consultar a api e registrar o novo usuario.
     this.userService.criarUsuario(user);
   }
 }

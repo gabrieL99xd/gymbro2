@@ -21,10 +21,12 @@ export class LoginComponent {
    }
 
   login(){
+    //Pega objeto com info do form.
     const user = {
       Usuario: this.loginForm.get('login')!.value,
       Senha: this.loginForm.get('password')!.value
     };
+    //chama serviço para verificar se usuario está cadastrado e autenticar.
     this.userService.autenticarUsuario(user);
   }
 }

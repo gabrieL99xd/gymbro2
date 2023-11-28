@@ -26,27 +26,27 @@ namespace GymBro_API.Controllers
         // GET: api/Publicacao
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Publicacao>>> GetPublicacoes(int pageSize, int pageIndex)
-        {
+        {   //Recupera as publicações , entretanto a logica é paginada ou seja irá receber  o tamanho da página e o Index. A lógica é o tamanho da página x o index e então devolver os elementos corretos.
             return await _context.Publicacoes.Skip(pageSize * pageIndex).Take(pageSize).OrderByDescending(p => p.Id).Include(p => p.Autor).ToListAsync();
         }
 
         [HttpGet("Total")]
         public async Task<ActionResult<IEnumerable<int>>> GetTotalPublicacoes()
-        {
+        {//Apenas conta quantas publicações existem
             return Ok(await _context.Publicacoes.CountAsync());
         }
 
         // GET: api/Publicacao/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Publicacao>> GetPublicacao(int id)
-        {
+        {   //recupera publicação baseada no Id, inclue as respostas e os autores que por padrão do lazy loading não seriam carregados.
             var publicacao = await _context.Publicacoes.Include(p => p.Autor).Include(p => p.Respostas).FirstOrDefaultAsync(p => p.Id == id);
-
+            //verifica se existe , caso não notfound será retornado.
             if (publicacao == null)
             {
                 return NotFound();
             }
-
+            //retorna objeto da publicação
             return publicacao;
         }
 
@@ -88,11 +88,13 @@ namespace GymBro_API.Controllers
         {
             try
             {
+                //Recupera usuario para remover erros do entity.
                 var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == publicacao.Autor.Id);
                 if (usuario == null)
                 {
                     return BadRequest("User não existe");
                 }
+                //Linha para deixar explicito ao entity que esse objeto foi pego do banco de dados , portanto não será uma adição forçada com um Id.
                 publicacao.Autor = usuario;
                 _context.Publicacoes.Add(publicacao);
                 await _context.SaveChangesAsync();
@@ -101,7 +103,7 @@ namespace GymBro_API.Controllers
             {
                 return BadRequest(ex.ToString());
             }
-
+            //Sucesso, retornar informações do objeto.
             return CreatedAtAction("GetPublicacao", new { id = publicacao.Id }, publicacao);
         }
 

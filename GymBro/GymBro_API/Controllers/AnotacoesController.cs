@@ -26,14 +26,15 @@ namespace GymBro_API.Controllers
         // GET: api/Anotacoes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Anotacao>>> GetAnotacao(int id)
-        {
+        {   
+            //Recebe o Id do usuario e recupera todas anotações dele
             var anotacoes = await _context.Anotacoes.Where( a => a.Autor.Id == id).Include(a => a.Autor).ToListAsync();
-
+            //Caso não encontrar nenhuma , retornar notfound
             if (anotacoes == null)
             {
                 return NotFound();
             }
-
+            //Sucesso , retorna anotação
             return anotacoes;
         }
 
@@ -70,19 +71,21 @@ namespace GymBro_API.Controllers
 
         // POST: api/Anotacoes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPost]
         public async Task<ActionResult<Anotacao>> PostAnotacao(Anotacao anotacao)
         {   
 
             var usuario = await _context.Usuarios.Where(u => u.Id == anotacao.Autor.Id).FirstOrDefaultAsync();
+            //Busca usuario para garantir que ele existe no bd.
             if (usuario == null)
                 return BadRequest("Autor não encontrado");
-
+            //Essa linha de código é para tratar erros do entity framework , caso remova essa linha ele não deixará inserir no banco , alegará que o usuario que veio na requisição é novo e não irá permitir.
             anotacao.Autor = usuario;
 
             _context.Anotacoes.Add(anotacao);
             await _context.SaveChangesAsync();
-
+            //Informaçoes de sucesso e o objeto são retornados.
             return CreatedAtAction("GetAnotacao", new { id = anotacao.Id }, anotacao);
         }
 

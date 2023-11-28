@@ -28,15 +28,15 @@ namespace GymBro_API.Controllers
         // GET: api/GymBro_Usuario/5
         [HttpGet("{id}")]
         public async Task<ActionResult<GymBro_Usuario>> GetGymBro_Usuario(int id)
-        {   
+        {   //Recupera usuario pelo id
             var gymBro_Usuario = await _context.Usuarios.FindAsync(id);
 
-
+            //caso não exista, retornar not found
             if (gymBro_Usuario == null)
             {
                 return NotFound();
             }
-
+            //sucesso, retornar objeto de usuario
             return gymBro_Usuario;
         }
 
@@ -87,31 +87,35 @@ namespace GymBro_API.Controllers
         public async Task<ActionResult<GymBro_Usuario>> PostGymBro_Usuario(GymBro_Usuario gymBro_Usuario)
         {
             var existeUsuario = await _context.Usuarios.AnyAsync(x => x.Usuario == gymBro_Usuario.Usuario);
+            // verifica no banco se já existe usuario cadastrado , em caso de existir retornar erro de BadRequest
             if (existeUsuario)
             {
                 return BadRequest("User já existe");
             }
+            //Sucesso , salvar no banco novo registro.
             _context.Usuarios.Add(gymBro_Usuario);
             await _context.SaveChangesAsync();
-
+            //Informar rota de criação , assim como informação para recuperar esse usuario.
             return CreatedAtAction("GetGymBro_Usuario", new { id = gymBro_Usuario.Id }, gymBro_Usuario);
         }
 
         [HttpPost("Autenticar")]
         public async Task<IActionResult> Autenticar(LoginRequest login)
-        {
+        {   //Recebe usuario e senha , busca usuario baseado nas credenciais.
             var gymBro_Usuario = await _context.Usuarios.Where(u => u.Usuario == login.Usuario && u.Senha == login.Senha).FirstOrDefaultAsync();
+            //Em caso de usuario ou senha errados , retornar não encontrado.
             if (gymBro_Usuario == null)
             {
                 return NotFound();
             }
-
+            //Usuario existe , prepara objeto para autenticar.
             var AutenticarResponse = new
-            {
+            {   
+                //Gera o token que será usado para retorno da API.
                 token = TokenDealer.Generate_Token(gymBro_Usuario),
                 usuario = gymBro_Usuario
             };
-
+            //Retorna objeto com informações do usuario e o token.
             return Ok(AutenticarResponse);
         }
 

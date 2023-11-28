@@ -14,6 +14,7 @@ export class RespostasService {
   constructor(private http : HttpClient , private tokenService : TokenService) { }
 
   saveResposta(idDaPublicacao : number, resposta : { idDoAutor:number , Descricao:string}){
+    //Requisição para salvar uma resposta de tal publicação.
     const token = this.tokenService.getToken() ?? '';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const body =  resposta ;

@@ -9,11 +9,13 @@ import { TokenService } from 'src/app/Services/Token/token.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  //Isso irá servir para pegar a barra de navegação quando o usuario estiver autenticado.
   @Input() sidenavRef: MatSidenav | null = null;
   constructor(public router: Router , public tokenService : TokenService ){ }
 
   toggle(){
     if(this.sidenavRef !== null){
+      //Caso ele esteja logado , a barra existe e irá garantir que seja aberta ou fechada.
       this.sidenavRef.toggle();
     }
   }
